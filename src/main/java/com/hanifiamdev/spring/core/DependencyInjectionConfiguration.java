@@ -11,8 +11,14 @@ import org.springframework.context.annotation.Primary;
 @Configuration
 public class DependencyInjectionConfiguration {
 
+    @Primary
     @Bean
-    public Foo foo(){
+    public Foo fooFirst(){
+        return new Foo();
+    }
+
+    @Bean
+    public Foo fooSecond(){
         return new Foo();
     }
 
@@ -22,7 +28,7 @@ public class DependencyInjectionConfiguration {
     }
 
     @Bean
-    public FooBar fooBar(Foo foo, Bar bar){
+    public FooBar fooBar(@Qualifier("fooSecond") Foo foo, Bar bar){
         return new FooBar(foo, bar);
     }
 
